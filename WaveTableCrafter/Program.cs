@@ -12,28 +12,7 @@ namespace WaveCrafter
         public const int StepsInWavetable = 32;
 
 
-        internal static Dictionary<byte, byte> mappingDictionary = new Dictionary<byte, byte>()
-        {
-            {0,0x00},
-            {1,0x01},
-            {2,0x02},
-            {3,0x02},
-            {4,0x03},
-            {5,0x04},
-            {6,0x05},
-            {7,0x07},
-            {8,0x08},
-            {9,0x09},
-            {10,0x10},
-            {11,0x11},
-            {12,0x12},
-            {13,0x13},
-            {14,0x14},
-            {15,0x15},
-            {16,0x16}
-        };
-
-        internal static List<Resistor> resistors = new List<Resistor>()
+        /*internal static List<Resistor> resistors = new List<Resistor>()
         {
             new Resistor(0b00000001, -3.3),
             new Resistor(0b00000010, -2.2),
@@ -45,7 +24,42 @@ namespace WaveCrafter
             new Resistor(0b10000000, 1)
 
         };
+        internal static List<Resistor> resistors = new List<Resistor>()
+        {
+            new Resistor(0b00001000, -3.3),
+            new Resistor(0b00000100, -2.2),
+            new Resistor(0b00000010, -1.5),
+            new Resistor(0b00000001, -1),
+            new Resistor(0b10000000, 3.3),
+            new Resistor(0b01000000, 2.2),
+            new Resistor(0b00100000, 1.5),
+            new Resistor(0b00010000, 1)
 
+        };*/
+        internal static List<Resistor> resistors = new List<Resistor>()
+        {
+            new Resistor(0b00001000, -3.3),
+            new Resistor(0b00000100, -2.2),
+            new Resistor(0b00000010, -1.5),
+            new Resistor(0b00000001, -1),
+            new Resistor(0b00010000, 3.3),
+            new Resistor(0b00100000, 2.2),
+            new Resistor(0b01000000, 1.5),
+            new Resistor(0b10000000, 1)
+
+        };/*
+        internal static List<Resistor> resistors = new List<Resistor>()
+        {
+            new Resistor(0b00000001, -3.3),
+            new Resistor(0b00000010, -2.2),
+            new Resistor(0b00000100, -1.5),
+            new Resistor(0b00001000, -1),
+            new Resistor(0b10000000, 3.3),
+            new Resistor(0b01000000, 2.2),
+            new Resistor(0b00100000, 1.5),
+            new Resistor(0b00010000, 1)
+
+        };*/
 
         public static double VoltagePotentialOfSystem
         {
