@@ -35,14 +35,14 @@ namespace WaveCrafter
 
         internal static List<Resistor> resistors = new List<Resistor>()
         {
-            new Resistor(0b00000001, 3.3),
-            new Resistor(0b00000010, 2.2),
-            new Resistor(0b00000100, 1.5),
-            new Resistor(0b00001000, 1),
-            new Resistor(0b10000000, -3.3),
-            new Resistor(0b01000000, -2.2),
-            new Resistor(0b00100000, -1.5),
-            new Resistor(0b00010000, -1)
+            new Resistor(0b00000001, -3.3),
+            new Resistor(0b00000010, -2.2),
+            new Resistor(0b00000100, -1.5),
+            new Resistor(0b00001000, -1),
+            new Resistor(0b00010000, 3.3),
+            new Resistor(0b00100000, 2.2),
+            new Resistor(0b01000000, 1.5),
+            new Resistor(0b10000000, 1)
 
         };
 
@@ -67,7 +67,7 @@ namespace WaveCrafter
             var allResistors = GetAllCombos(resistors.ToArray());
             var allStates = allResistors.Select(x => new State(x.ToArray())).ToArray().OrderBy(x => x.Voltage);
             var validStates = allStates.Where(x => x.PositiveResistors.Any() && x.NegativeResistors.Any());
-            var uniqueStates = allStates.GroupBy(x => x.Voltage).OrderBy(x => x.First().Voltage).ToArray().Select(x => x.First()).ToArray();
+            var uniqueStates = validStates.GroupBy(x => x.Voltage).OrderBy(x => x.First().Voltage).ToArray().Select(x => x.First()).ToArray();
             foreach (var state in uniqueStates)
             {
                 Console.WriteLine($"State Voltage = {state.Voltage} System Positive Resistance = {state.PositiveResistance} Negative Resistance = {state.NegativeResistance}, Address = 0b{Convert.ToString(state.Address, 2).PadLeft(8,'0')} 0x{Convert.ToString(state.Address, 16)}, Resistors = {string.Join(',',state.Resistors.Select(x => x.ResistorValue.ToString()))}");
@@ -114,6 +114,13 @@ namespace WaveCrafter
             }
         }
 
+      /*  private static IEnumerable<double> GetSawToothTable(int steps, double minValue, double maxValue)
+        {
+            for (var ix = 0; ix < steps; ix++)
+            {
+
+            }
+        }*/
 
         public class Resistor
         {
@@ -136,8 +143,8 @@ namespace WaveCrafter
         {
             public IEnumerable<Resistor> PositiveResistors => Resistors.Where(x => x.ResistorValue > 0);
             public IEnumerable<Resistor> NegativeResistors => Resistors.Where(x => x.ResistorValue < 0);
-            public double PositiveResistance => PositiveResistors.Sum(x => 1 / x.ResistorValue);
-            public double NegativeResistance => Math.Abs(NegativeResistors.Sum(x => 1 / x.ResistorValue));
+            public double PositiveResistance => 1/PositiveResistors.Sum(x => 1 / x.ResistorValue);
+            public double NegativeResistance => 1/Math.Abs(NegativeResistors.Sum(x => 1 / x.ResistorValue));
             public double TotalResistanceOfSystem => PositiveResistance + NegativeResistance;
 
             public double Voltage
