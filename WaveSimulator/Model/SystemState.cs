@@ -5,13 +5,14 @@ namespace WaveSimulator.Model
     {
         
         public Resistor[] Resistors { get; set; }
-        public SystemConfiguration Configuration { get; set; }
+        public SystemConfiguration SystemConfiguration { get; set; }
 
         public SystemState() { }
 
         public SystemState(SystemConfiguration Configuration, Resistor[] resistors)
         {
             Resistors = resistors;
+            SystemConfiguration = Configuration;
         }
     
     }

@@ -20,19 +20,28 @@ namespace WaveSimulator.Services
             var voltagePotentialSimulated = allSystemStates.GetSimulatedVoltagePotential();
             var normalizedVoltageTargetTable = GenerateTargetTable();
             var normalizedStateTable = normalizedVoltageTargetTable
-                .Select(x => allSystemStates.Aggregate((y, z) => Math.Abs(y.GetVoltage() - x) < Math.Abs(z.GetVoltage() - x) ? y : z));
+                .Select(x => GetNearestVoltage(x, allSystemStates));
             var finalConfig = normalizedStateTable.Select(x => x.GetStateRegisterState());
             return finalConfig.ToArray();
 
             IEnumerable<double> GenerateTargetTable()
             {
-                for (int ix = 0; ix > maxNormalizedTargetValue; ix++)
+                for (int ix = 0; ix <= maxNormalizedTargetValue; ix++)
                 {
                     //Take normallized state and scale to voltage
-                    yield return (((double)ix / (double)maxNormalizedTargetValue) * voltagePotentialSimulated) - minSimulatedStateVoltage;
+                    yield return (((double)ix / (double)maxNormalizedTargetValue) * voltagePotentialSimulated) + minSimulatedStateVoltage;
                 }
             }
+
+            SystemState GetNearestVoltage(double targetVoltage, ICollection<SystemState> systemStates)
+            {
+                return systemStates.Select(p => new { Value = p, Difference = Math.Abs(p.GetVoltage() - targetVoltage) })
+                    .OrderBy(p => p.Difference).First().Value;
+                    
+            }
         }
+
+        
 
     }
 }

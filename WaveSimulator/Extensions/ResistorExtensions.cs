@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using WaveSimulator.Model;
+
 namespace WaveSimulator.Extensions
 {
-    public class ResistorExtensionbs
+    public static class ResistorExtensions
     {
-        public ResistorExtensionbs()
-        {
-        }
     }
 }

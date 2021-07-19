@@ -8,7 +8,7 @@ namespace WaveSimulator.Model
 
         public Resistor()
         {
-                
+
         }
         
         public Resistor(int address, double value)
